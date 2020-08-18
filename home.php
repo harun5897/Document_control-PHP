@@ -104,7 +104,7 @@
                     <hr>
                     Address:
                     JL Aster, Lot 1-2 Biie Lobam, Kabupaten Bintan, Kepulauan Riau 29151, Indonesia
-                    <br> Phone: +62 770 696226 
+                    <br> Phone: +62 770 696226
                 </div>
             </div>
         </div>
