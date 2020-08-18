@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>List User</title>
 
     <!--STYLING CSS DAN JQUERY BOOTSTRAP  -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -61,55 +61,99 @@
             </div>       
         </div>
         <div class="card-body">
-            <h5 class="card-title font"> <b>Home</b></h5>
+            <h5 class="card-title font"> <b>User List</b></h5>
             <hr>
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="card bg-info text-white font">
-                        <div class="card-body row">
-                            <div class="col-sm-1">
-                                <h1> <i class="fas fa-file"></i></h1>
-                            </div>
-                            <div class="col-sm text-right">
-                                <h4>100</h4>
-                                <p>Total WI</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card bg-success text-white font mt-3">
-                        <div class="card-body row">
-                            <div class="col-sm-1">
-                                <h1> <i class="fas fa-tasks"></i></h1>
-                            </div>
-                            <div class="col-sm text-right">
-                                <h4>100</h4>
-                                <p>Request WI</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card bg-danger text-white font mt-3">
-                        <div class="card-body row">
-                            <div class="col-sm-1">
-                                <h1> <i class="far fa-sticky-note"></i></h1>
-                            </div>
-                            <div class="col-sm text-right">
-                                <h4>100</h4>
-                                <p>Absolote WI</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-sm">
+                    <a href="input_wi.php" type="button"  data-toggle="modal" data-target="#exampleModal1" class="btn general_color text-white"><i class="fas fa-plus"></i> New</a>
                 </div>
-                <div class="col-sm font">
-                    <img src="img/home_pic.jpg" alt="" style="width: 100%;">
-                    <hr>
-                    Address:
-                    JL Aster, Lot 1-2 Biie Lobam, Kabupaten Bintan, Kepulauan Riau 29151, Indonesia
-                    <br> Phone: +62 770 696226
+                <div class="col-sm-3">
+                <input class="form-control is-valid" type="search" placeholder="Search" aria-label="Search" id="myInput">
+                </div>
+            </div>
+            <table class="table table-bordered mt-2 table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Nik</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>012</td>
+                        <td>Joko Susilo</td>
+                        <td>joko@gmail.com</td>
+                        <td class="text-center">
+                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>013</td>
+                        <td>Harun</td>
+                        <td>harun@gmail.com</td>
+                        <td class="text-center">
+                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Modal Input User -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-user-plus"></i> Input User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Nik</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="tgl_1">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="tgl_2">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                            <input type="text" class="form-control" name="tgl_2">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                            <input type="password" class="form-control" name="tgl_2">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="b_cetak" class="btn general_color text-white"> <i class="fas fa-save"></i> Save</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Modal GANTI PASSWORD -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

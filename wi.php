@@ -52,9 +52,9 @@
                     <div class="dropdown mr-3">
                         <b><a href="" style="color:black"><i class="fas fa-cog "></i> Setings</a></b>
                         <div class="dropdown-content">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
+                            <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
+                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <a href="#"><i class="fas fa-info-circle"></i> About us</a>
                         </div>
                     </div>
                 </div>
@@ -186,6 +186,39 @@
                 <div class="modal-footer">
                     <button type="submit" name="b_filter" class="btn general_color text-white"> <i class="fas fa-filter"></i> Filter</button>
                     <button type="submit" name="b_cetak" class="btn general_color text-white"> <i class="fas fa-print"></i> Print</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal GANTI PASSWORD -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-key"></i> Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">Password</label>
+                            <div class="col-sm-8">
+                            <input type="text" class="form-control" name="password" placeholder="Input Password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-4 col-form-label">New Password</label>
+                            <div class="col-sm-8">
+                            <input type="text" class="form-control" name="password" placeholder="Input New Password">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="b_pass" class="btn general_color text-white"> <i class="fas fa-key"></i> <b>OK</b></button>
                     </form>
                 </div>
             </div>

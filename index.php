@@ -42,7 +42,7 @@
                                 <input type="password" class="form-control" id="exampleInputPassword1">
                             </div>
                             <hr>
-                            <a href="home.php" class="btn btn-warning">Login</a>
+                            <a href="home.php" class="btn btn-warning font"><i class="fas fa-sign-in-alt"></i> Login</a>
                         </form>
                     </div>
                 </div>
