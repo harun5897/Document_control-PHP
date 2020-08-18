@@ -66,16 +66,16 @@
 
 .center {
     margin: auto;
-    position: absolute;
-    top: 0; left: 25px; bottom: 0; right: 0;
-    /* height: 300px; */
-    border: none; /*jika ingin melihat posisi div anda lebih jelas */
+    width: 70%;
+    /* border: 3px solid #707568; */
+    margin-top: 150px;
+    
 }
 
 .view_file {
     height: 75vh;
     width: 100%;
-    background-color: rgb(194, 199, 199);
+    background-color: rgb(67, 173, 173);
 }
 
 .menu_box {
@@ -83,4 +83,7 @@
     width: 243px;
     background-color: teal;
     margin: auto;
+}
+.general_color{
+    background-color: teal;
 }

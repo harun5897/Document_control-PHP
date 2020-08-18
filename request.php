@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WI</title>
+    <title>Request</title>
 
     <!--STYLING CSS DAN JQUERY BOOTSTRAP  -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -61,11 +61,10 @@
             </div>       
         </div>
         <div class="card-body">
-            <h5 class="card-title font"> <b>Work Instruction</b></h5>
+            <h5 class="card-title font"> <b>Request</b></h5>
             <hr>
             <div class="row">
                 <div class="col-sm">
-                    <a href="input_wi.php" class="btn general_color text-white"><i class="fas fa-plus"></i> New</a>
                     <a href="" class="btn general_color text-white" type="submit" data-toggle="modal" data-target="#exampleModal1"><i class="fas fa-filter"></i> Filter</a>
                 </div>
                 <div class="col-sm-3">
@@ -80,7 +79,6 @@
                         <th scope="col">Doc Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Revisi</th>
-                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -91,11 +89,10 @@
                         <td>Turn On Machine</td>
                         <td>12-2-2012</td>
                         <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
                         <td class="text-center">
                             <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
                         </td>
                     </tr>
                     <tr>
@@ -104,11 +101,10 @@
                         <td>Turn Off Machine</td>
                         <td>12-2-2012</td>
                         <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
                         <td class="text-center">
                             <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
                         </td>
                     </tr>
                     <tr>
@@ -117,11 +113,10 @@
                         <td>Repair Machine</td>
                         <td>12-2-2012</td>
                         <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
                         <td class="text-center">
                             <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
                         </td>
                     </tr>
                     <tr>
@@ -130,11 +125,10 @@
                         <td>Trash Machine</td>
                         <td>12-2-2012</td>
                         <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
                         <td class="text-center">
                             <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
                         </td>
                     </tr>
                     <tr>
@@ -143,11 +137,10 @@
                         <td>Request Machine</td>
                         <td>12-2-2012</td>
                         <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
                         <td class="text-center">
                             <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
                         </td>
                     </tr>
                 </tbody>

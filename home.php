@@ -46,7 +46,7 @@
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
                     <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
-                    <b> <a href="" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
+                    <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
                 </div>
                 <div class="col-sm-1.5">
                     <div class="dropdown mr-3">

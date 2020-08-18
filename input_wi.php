@@ -99,7 +99,7 @@
                         </div>
                         <hr>
                         <div class="form-group row">
-                            <a href="" class="btn btn-success ml-3"><i class="fas fa-save"></i> Save</a>
+                            <a href="" class="btn general_color text-white ml-3"><i class="fas fa-save"></i> Save</a>
                         </div>
                     </form>
                 </div>

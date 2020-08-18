@@ -45,8 +45,8 @@
                 <div class="col-sm">
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
-                    <b> <a href="" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
-                    <b> <a href="" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
+                    <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
+                    <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
                 </div>
                 <div class="col-sm-1.5">
                     <div class="dropdown mr-3">
@@ -65,8 +65,7 @@
             <hr>
             <div class="row">
                 <div class="col-sm">
-                    <a href="input_wi.php" class="btn btn-outline-info"><i class="fas fa-plus"></i> New</a>
-                    <a href="" class="btn btn-outline-info"><i class="fas fa-filter"></i> Filter</a>
+                    <a href="" class="btn general_color text-white" type="submit" data-toggle="modal" data-target="#exampleModal1"><i class="fas fa-filter"></i> Filter</a>
                 </div>
                 <div class="col-sm-3">
                 <input class="form-control is-valid" type="search" placeholder="Search" aria-label="Search" id="myInput">
@@ -155,5 +154,40 @@
         </div>
     </div>
 </div>
+
+
+    <!-- Modal Filter Data -->
+    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-filter"></i> Filter Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label">Start Date</label>
+                            <div class="col-sm-9">
+                            <input type="date" class="form-control" name="tgl_1">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-3 col-form-label">End Date</label>
+                            <div class="col-sm-9">
+                            <input type="date" class="form-control" name="tgl_2">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="b_filter" class="btn btn-info"> <i class="fas fa-filter"></i> Filter</button>
+                    <button type="submit" name="b_cetak" class="btn btn-info"> <i class="fas fa-print"></i> Print</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
