@@ -1,0 +1,86 @@
+.body{
+    /* background-image: url(bg1.jpg); */
+    background-color: rgb(228, 214, 214);
+    background-size: cover;
+    background-attachment: fixed;
+    width: 100%;
+}
+.top_title {
+    height: 15vh;
+    background-color: teal;
+}
+
+.font{
+    font-family: 'Lucida Sans Unicode';
+}
+.log_out {
+    background-color: rgb(96, 148, 143);
+    width: 80px;
+    height: 99px;
+    border-style: solid;
+    border-color: rgb(105, 102, 100);
+
+}
+.center_logout {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 25px; bottom: 0; right: 0;
+    /* height: 300px; */
+    border: none; /*jika ingin melihat posisi div anda lebih jelas */
+}
+
+/* Dropdown  */
+.dropbtn {
+    color: black;
+    border: none;
+    }
+
+    /* .dropdown {
+    position: relative;
+    display: inline-block;
+    } */
+
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    }
+
+    .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #ddd;}
+
+    .dropdown:hover .dropdown-content {display: block;}
+
+    .dropdown:hover .dropbtn {background-color: #3e8e41;}
+/* Dropdown  */
+
+.center {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 25px; bottom: 0; right: 0;
+    /* height: 300px; */
+    border: none; /*jika ingin melihat posisi div anda lebih jelas */
+}
+
+.view_file {
+    height: 75vh;
+    width: 100%;
+    background-color: rgb(194, 199, 199);
+}
+
+.menu_box {
+    height: 120px;
+    width: 243px;
+    background-color: teal;
+    margin: auto;
+}
