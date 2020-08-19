@@ -1,3 +1,22 @@
+<?php
+
+session_start();
+include_once('function/helper.php');
+include_once("function/koneksi.php");
+
+if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
+    header("location:index.php?pesan=gagal");
+}
+
+if(isset($_GET['login'])){
+    ?>
+        <script> var login = true; </script>
+    <?php
+} 
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,10 +49,13 @@
             <h4>Document Control</h4>
             <p>  PT. Sanden</p>
         </div>
-        <div class="col-sm-1"> 
-            <div class="log_out ml-3"> 
-                <a href=""><img class="center_logout" src="img/icon_logout.png" alt="" style="height: 45px;"></a>
-            </div>
+        <div class="col-sm-1">
+            <a href="logout.php">
+                <div class="log_out ml-3"> 
+                    <!-- <a href=""><img class="center_logout" src="img/icon_logout.png" alt="" style="height: 45px;"></a> -->
+                    <h1 class="mt-4 ml-3" style="color:black;"><i class="fas fa-power-off"></i></h1>
+                </div>
+            </a> 
         </div>
     </div>
     
@@ -45,15 +67,36 @@
                 <div class="col-sm">
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
-                    <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
-                    <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
+                    <?php
+                        if($_SESSION['position'] == 'admin') 
+                        {
+                    ?>
+                        <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if($_SESSION['position'] == 'super') 
+                        {
+                    ?>
+                        <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
+                    <?php
+                        }
+                    ?>
                 </div>
                 <div class="col-sm-1.5">
                     <div class="dropdown mr-3">
                         <b><a href="" style="color:black"><i class="fas fa-cog "></i> Setings</a></b>
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
+                            <?php
+                                if($_SESSION['position'] == 'admin') 
+                                {
+                            ?>
                             <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <?php
+                                }
+                            ?>
                             <a href="#"><i class="fas fa-info-circle"></i> About us</a>
                         </div>
                     </div>
@@ -144,4 +187,21 @@
         </div>
     </div>
 </body>
+
+<!-- // ALERT LOGIN  -->
+<script>
+    if(login) {
+        Swal.fire({
+                icon: 'success',
+                title: 'Login Success !',
+                text: 'Welcome to Our Website',
+                showConfirmButton: false,
+                timer: 1700
+            });
+            setTimeout(function(){
+            window.location.href = 'home.php';
+        }, 1700);
+
+    }
+</script>
 </html>
