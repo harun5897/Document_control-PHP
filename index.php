@@ -30,6 +30,12 @@ include_once("function/koneksi.php");
 if(isset($_POST['log'])) {
     login($koneksi, $_POST['p_email'], $_POST['p_password']);
 }
+
+if(isset($_GET['logout'])) {
+    ?>
+    <script> var logout = true; </script>
+<?php
+}
 ?>
 <body class="body">
     <div class="container font">
@@ -72,5 +78,21 @@ if(isset($_POST['log'])) {
                     text: 'Check Email and Your Password!',
                 });
             }
+</script>
+
+<!-- // ALERT LOGOUT  -->
+<script>
+    if(logout) {
+        Swal.fire({
+                icon: 'success',
+                title: 'Logout Success !',
+                showConfirmButton: false,
+                timer: 1700
+            });
+            setTimeout(function(){
+            window.location.href = 'index.php';
+        }, 1700);
+
+    }
 </script>
 </html>

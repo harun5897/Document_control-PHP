@@ -66,7 +66,7 @@ if($_SESSION['position']!=="staff"){
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super') 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff") 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -118,16 +118,15 @@ if($_SESSION['position']!=="staff"){
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Revisi</b></label>
+                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Revision</b></label>
                             <div class="col-sm-9">
                             <input type="" class="form-control" id="colFormLabel" placeholder="">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="colFormLabel" class="col-sm-3 col-form-label"><b>File</b></label>
-                            <div class="custom-file col-sm-5 ml-3">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                            <div class="custom-file col-sm">
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
                             </div>
                         </div>
                         <hr>
@@ -137,8 +136,9 @@ if($_SESSION['position']!=="staff"){
                     </form>
                 </div>
                 <div class="col-sm">
-                    <div class="view_file">
-
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="ddp_mc-ugm_guidelines_forms_Oct2020(1).pdf" type="application/pdf" allowfullscreen></iframe>
+                    </div>
                     </div>
                 </div>
             </div>

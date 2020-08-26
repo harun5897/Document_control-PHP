@@ -66,7 +66,7 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super') 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff") 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>

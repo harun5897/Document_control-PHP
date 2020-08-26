@@ -76,7 +76,7 @@ if(isset($_GET['login'])){
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super') 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff") 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>

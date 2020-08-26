@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="super"){
+if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
 ?>
@@ -66,7 +66,7 @@ if($_SESSION['position']!=="super"){
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super') 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position']=="staff") 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -98,6 +98,14 @@ if($_SESSION['position']!=="super"){
             <hr>
             <div class="row">
                 <div class="col-sm">
+                    <?php
+                        if($_SESSION['position'] == 'staff') 
+                        {
+                    ?>
+                        <a href="input_wi.php" class="btn general_color text-white"><i class="fas fa-plus"></i> New</a>
+                    <?php
+                        }
+                    ?>
                     <a href="" class="btn general_color text-white" type="submit" data-toggle="modal" data-target="#exampleModal1"><i class="fas fa-filter"></i> Filter</a>
                 </div>
                 <div class="col-sm-3">
