@@ -95,6 +95,5 @@ function edit_wi ($koneksi, $doc_code, $doc_name, $date, $revision, $file, $id) 
 
     move_uploaded_file($file["tmp_name"], "db_file/" . $file_up);
     header('location: request.php');
-    //echo
 }
 ?>
