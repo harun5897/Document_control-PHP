@@ -125,71 +125,26 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                        $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
+                        while($data = mysqli_fetch_array($tampil)) : 
+                            if ($data['status'] == 'Y') {
+                    ?>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>A12</td>
-                        <td>Turn On Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
+                        <th scope="row"><?=$data['id'] ?></th>
+                        <td><?=$data['doc_code'] ?></td>
+                        <td><?=$data['doc_name'] ?></td>
+                        <td><?=$data['date'] ?></td>
+                        <td><?=$data['revision']?></td>
+                        <td><span class="badge badge-pill badge-primary"> Accepted</span></td>
                         <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>A13</td>
-                        <td>Turn Off Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>A14</td>
-                        <td>Repair Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>A15</td>
-                        <td>Trash Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>A16</td>
-                        <td>Request Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
+                    <?php } endwhile; ?>
+                                <?php
+                                
+                                ?>
                 </tbody>
             </table>
         </div>

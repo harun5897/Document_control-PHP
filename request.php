@@ -6,7 +6,32 @@ include_once("function/koneksi.php");
 if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
+if(isset($_GET['save'])){
+    ?>
+        <script> var save = true; </script>
+    <?php
+} 
+
+if(isset($_GET['hal'])) {
+    if($_GET['hal'] == 'reject') {
+
+        reject($koneksi, $_GET['id']);
+    }
+
+    if($_GET['hal'] == 'accept') {
+
+        accept($koneksi, $_GET['id']);
+    }
+
+    if($_GET['hal'] == 'req') {
+
+        req($koneksi, $_GET['id']);
+    }
+
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,70 +145,61 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
                         <th scope="col">Doc Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Revisi</th>
+                        <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                        $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
+                        while($data = mysqli_fetch_array($tampil)) : 
+                            if ($data['status'] == 'N' || $data['status'] == 'R') {
+                    ?>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>A12</td>
-                        <td>Turn On Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
+                        <th scope="row"> <?=$data['id']?> </th>
+                        <td> <?=$data['doc_code']?> </td>
+                        <td> <?=$data['doc_name']?> </td>
+                        <td> <?=$data['date']?></td>
+                        <td> <?=$data['revision']?> </td>
+                        <td>   
+                                <?php
+                                    if($data['status'] == 'N'){
+                                        echo '<span class="badge badge-pill badge-warning"> Request 
+                                        </span>';
+                                    }
+                                    if($data['status'] == 'R'){
+                                        echo '<span class="badge badge-pill badge-danger"> Not Accepted 
+                                        </span>';
+                                    }
+                                ?>
+                        </td>
                         <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+                            <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+
+                            <?php
+                                if($_SESSION['position'] == 'staff'){
+                            ?>
+                            <a href="input_wi.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i></a>
+                            <a href="request.php?hal=req&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-arrow-alt-circle-right"></i></a>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if($_SESSION['position'] == 'super' && $data['status'] !== "R"){
+                                    
+                            ?>
+                            <a href="request.php?hal=accept&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+
+                            <?php
+                                }
+                            ?>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>A13</td>
-                        <td>Turn Off Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>A14</td>
-                        <td>Repair Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>A15</td>
-                        <td>Trash Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>A16</td>
-                        <td>Request Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
-                        </td>
-                    </tr>
+                    <?php } endwhile; ?>
+                                <?php
+                                
+                                ?>
                 </tbody>
             </table>
         </div>
@@ -258,4 +274,19 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
         </div>
     </div>
 </body>
+<!-- // ALERT SAVE  -->
+<script>
+    if(save) {
+        Swal.fire({
+                icon: 'success',
+                title: 'Save Success !',
+                showConfirmButton: false,
+                timer: 1700
+            });
+            setTimeout(function(){
+            window.location.href = 'request.php';
+        }, 1700);
+
+    }
+</script>
 </html>

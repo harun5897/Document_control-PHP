@@ -29,6 +29,36 @@ if($_SESSION['position']!=="staff"){
     <!-- SWALL -->
     <script src="alert/sweetalert2.all.min.js"></script>
 </head>
+<?php
+include_once("function/helper.php");
+include_once("function/koneksi.php");
+if(isset($_POST['btn_input_wi'])) {
+    $file = $_FILES["file"];
+    input_wi($koneksi, $_POST['doc_code'], 
+                    $_POST['doc_name'],
+                    $_POST['date'],
+                    $_POST['revision'],
+                    $file);
+}
+
+if(isset($_POST['btn_edit_wi'])) {
+    $file = $_FILES["file"];
+    edit_wi($koneksi, $_POST['doc_code'], 
+                    $_POST['doc_name'],
+                    $_POST['date'],
+                    $_POST['revision'],
+                    $file,
+                    $_GET['id']);
+}
+
+if(isset($_GET['hal'])) {
+    if($_GET['hal'] == 'edit'){
+        show_edit($koneksi, $_GET['id']);
+    }
+    $arr = $_SESSION['data_edit'];
+}
+
+?>
 <body class="body">
 <div class="top_title container-fluid">
     <div class="row">
@@ -98,46 +128,91 @@ if($_SESSION['position']!=="staff"){
             <hr>
             <div class="row">
                 <div class="col-sm">
-                    <form>
-                        <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Code</b></label>
-                            <div class="col-sm-9">
-                            <input type="" class="form-control" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Name</b></label>
-                            <div class="col-sm-9">
-                            <input type="" class="form-control" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Date</b></label>
-                            <div class="col-sm-9">
-                            <input type="date" class="form-control" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Revision</b></label>
-                            <div class="col-sm-9">
-                            <input type="" class="form-control" id="colFormLabel" placeholder="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="colFormLabel" class="col-sm-3 col-form-label"><b>File</b></label>
-                            <div class="custom-file col-sm">
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="form-group row">
-                            <a href="" class="btn general_color text-white ml-3"><i class="fas fa-save"></i> Save</a>
-                        </div>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <?php
+                            if(isset($_GET['hal'])) 
+                                {
+                                ?>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Code</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" value="<?=$arr['doc_code']?>" name="doc_code">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Name</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" value="<?=$arr['doc_name']?>" name="doc_name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Date</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="date" class="form-control" id="colFormLabel" placeholder="" value="<?=$arr['date']?>" name="date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Revision</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" value="<?=$arr['revision']?>" name="revision">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>File</b></label>
+                                    <div class="custom-file col-sm">
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-danger text-white ml-3" name="btn_edit_wi" ><i class="fas fa-save"></i> Save</button>
+                                </div>
+                            <?php
+                            } else
+                            {
+                                ?>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Code</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" name="doc_code">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Doc Name</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" name="doc_name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Date</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="date" class="form-control" id="colFormLabel" placeholder="" name="date">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Revision</b></label>
+                                    <div class="col-sm-9">
+                                    <input type="" class="form-control" id="colFormLabel" placeholder="" name="revision">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>File</b></label>
+                                    <div class="custom-file col-sm">
+                                    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="file">
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="form-group row">
+                                    <button type="submit" class="btn general_color text-white ml-3" name="btn_input_wi" ><i class="fas fa-save"></i> Save</button>
+                                </div>
+                            <?php
+                            }   
+                        ?>
                     </form>
                 </div>
                 <div class="col-sm">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="ddp_mc-ugm_guidelines_forms_Oct2020(1).pdf" type="application/pdf" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" src="" type="application/pdf" allowfullscreen></iframe>
                     </div>
                     </div>
                 </div>

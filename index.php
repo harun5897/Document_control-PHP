@@ -39,7 +39,7 @@ if(isset($_GET['logout'])) {
 ?>
 <body class="body">
     <div class="container font">
-        <div class="card mb-3 center" style="max-width: 640px;">
+        <div class="card mb-3 center shadow-box" style="max-width: 640px;">
             <div class="row no-gutters text-white rounded">
                 <div class="col-md-5">
                     <img src="img/logo_login.jpg" class="card-img" alt="..." style="height: 316px; width: 275px">
