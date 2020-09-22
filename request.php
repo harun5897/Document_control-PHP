@@ -27,7 +27,21 @@ if(isset($_GET['hal'])) {
 
         req($koneksi, $_GET['id']);
     }
+}
 
+if(isset($_GET['notif'])) {
+    if($_GET['notif'] == 'reject' ) {
+        notif_reject($koneksi, $_GET['id']);
+    }
+
+    if($_GET['notif'] == 'acc' ) {
+        notif_acc($koneksi, $_GET['id']);
+    }
+
+    if($_GET['notif'] == 'request' ) {
+        notif_request($koneksi, $_GET['id']);
+    }
+    
 }
 
 ?>

@@ -29,6 +29,17 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
     <!-- SWALL -->
     <script src="alert/sweetalert2.all.min.js"></script>
 </head>
+
+<?php
+if(isset($_GET['notif'])) {
+    if($_GET['notif'] == 'acc') {
+        notif_acc($koneksi, $_GET['id']);
+    }
+    if($_GET['notif'] == 'acc_admin') {
+        notif_acc_admin($koneksi, $_GET['id']);
+    }
+}
+?>
 <body class="body">
 <div class="top_title container-fluid">
     <div class="row">
@@ -126,9 +137,14 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
                 </thead>
                 <tbody>
                     <?php
+
                         $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
-                        while($data = mysqli_fetch_array($tampil)) : 
-                            if ($data['status'] == 'Y') {
+                        while($data = mysqli_fetch_array($tampil)) :
+                            $id = $data['id'];
+                            $obj_obsolete = mysqli_query($koneksi, "SELECT * from tb_obsolete where id_wi = '$id'");
+                            $arr_obsolete = mysqli_fetch_array($obj_obsolete);
+                                if ($data['status'] == 'Y') {
+                                    if(!$arr_obsolete) {                  
                     ?>
                     <tr>
                         <th scope="row"><?=$data['id'] ?></th>
@@ -139,12 +155,24 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
                         <td><span class="badge badge-pill badge-primary"> Accepted</span></td>
                         <td class="text-center">
                             <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                            <?php
+                                if($_SESSION['position'] == 'admin')
+                                {
+                            ?>
+                                <a href="obsolete.php?hal=obsolete&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-file-import"></i></a>
+                            <?php
+                                }
+                            ?>
                         </td>
                     </tr>
-                    <?php } endwhile; ?>
-                                <?php
-                                
-                                ?>
+                    <?php  
+                                    }
+                                }
+                        endwhile; 
+                    ?>
+                        <?php
+                        
+                        ?>
                 </tbody>
             </table>
         </div>

@@ -165,7 +165,8 @@ if(isset($_GET['hal'])) {
                                 </div>
                                 <hr>
                                 <div class="form-group row">
-                                    <button type="submit" class="btn btn-danger text-white ml-3" name="btn_edit_wi" ><i class="fas fa-save"></i> Save</button>
+                                    <b> <button type="submit" class="btn btn-warning ml-3" name="btn_edit_wi" ><i class="fas fa-save"></i> Save</button>
+                                    </b>
                                 </div>
                             <?php
                             } else

@@ -29,6 +29,22 @@ if($_SESSION['position']!=="admin"){
     <!-- SWALL -->
     <script src="alert/sweetalert2.all.min.js"></script>
 </head>
+<?php
+if(isset($_GET['hal'])) {
+    if($_GET['hal'] == 'obsolete'){
+        obsolete($koneksi, $_GET['id']);
+    }
+    if($_GET['hal'] == 'del_obsol'){
+        del_obsol($koneksi, $_GET['id']);
+    }
+}
+
+if(isset($_GET['notif'])) {
+    if($_GET['notif'] == 'obsolete') {
+        notif_obsolete($koneksi, $_GET['id']);
+    }
+}
+?>
 <body class="body">
 <div class="top_title container-fluid">
     <div class="row">
@@ -105,76 +121,52 @@ if($_SESSION['position']!=="admin"){
                         <th scope="col">Doc Name</th>
                         <th scope="col">Date</th>
                         <th scope="col">Revisi</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Start Obsolete</th>
+                        <th scope="col">Last Obsolete</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>A12</td>
-                        <td>Turn On Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
+                    <?php
+                        $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
+                        while($data = mysqli_fetch_array($tampil)) :
+                            $id = $data['id'];
+                            $obj_obsolete = mysqli_query($koneksi, "SELECT * from tb_obsolete where id_wi = '$id'");
+                            $arr_obsolete = mysqli_fetch_array($obj_obsolete);
+                                if ($data['status'] == 'Y') {
+                                    if($arr_obsolete) { 
+                                        $now_date = date('Y-m-d');
+                                        $end_date = $arr_obsolete['end_date'];
+
+                        ?>
+                        <tr>
+                        <th scope="row"><?=$data['id'] ?></th>
+                        <td><?=$data['doc_code'] ?></td>
+                        <td><?=$data['doc_name'] ?></td>
+                        <td><?=$data['date'] ?></td>
+                        <td><?=$data['revision']?></td>
+                        <td><?=$arr_obsolete['start_date']?></td>
+                        <td><?=$arr_obsolete['end_date']?></td>
                         <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                        <?php
+                            if($now_date >= $end_date) {
+                        ?>
+                            <a href="obsolete.php?hal=del_obsol&id=<?=$arr_obsolete['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+
+                        <?php
+                            }
+                        ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>A13</td>
-                        <td>Turn Off Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>A14</td>
-                        <td>Repair Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">4</th>
-                        <td>A15</td>
-                        <td>Trash Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">5</th>
-                        <td>A16</td>
-                        <td>Request Machine</td>
-                        <td>12-2-2012</td>
-                        <td>1</td>
-                        <td><span class="badge badge-pill badge-primary"> Accept</span></td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
+                        </tr>
+                        <?php  
+                                    }
+                                }
+                        endwhile; 
+                        ?>
+                        <?php
+
+                        ?>
                 </tbody>
             </table>
         </div>
