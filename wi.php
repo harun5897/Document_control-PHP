@@ -6,6 +6,7 @@ include_once("function/koneksi.php");
 if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +39,15 @@ if(isset($_GET['notif'])) {
     if($_GET['notif'] == 'acc_admin') {
         notif_acc_admin($koneksi, $_GET['id']);
     }
+}
+
+if(isset($_POST['b_pass'])) {
+
+    change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
+}
+
+if(isset($_POST['b_filter'])) {
+    filter_data($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
 }
 ?>
 <body class="body">
@@ -137,9 +147,14 @@ if(isset($_GET['notif'])) {
                 </thead>
                 <tbody>
                     <?php
-
-                        $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
-                        while($data = mysqli_fetch_array($tampil)) :
+                    if(isset($_GET['filter'])) {
+                        $dt1 = $_SESSION['dt1'];
+                        $dt2 = $_SESSION['dt2'];
+                        $obj = mysqli_query($koneksi, "SELECT * FROM tb_wi WHERE date BETWEEN '$dt1' AND '$dt2'");
+                    } else {
+                        $obj = mysqli_query($koneksi, "SELECT * from tb_wi");
+                    }
+                        while($data = mysqli_fetch_array($obj)) :
                             $id = $data['id'];
                             $obj_obsolete = mysqli_query($koneksi, "SELECT * from tb_obsolete where id_wi = '$id'");
                             $arr_obsolete = mysqli_fetch_array($obj_obsolete);
@@ -169,6 +184,7 @@ if(isset($_GET['notif'])) {
                                     }
                                 }
                         endwhile; 
+
                     ?>
                         <?php
                         
@@ -243,7 +259,7 @@ if(isset($_GET['notif'])) {
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">New Password</label>
                             <div class="col-sm-8">
-                            <input type="text" class="form-control" name="password" placeholder="Input New Password">
+                            <input type="text" class="form-control" name="new_password" placeholder="Input New Password">
                             </div>
                         </div>
                 </div>

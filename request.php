@@ -6,11 +6,6 @@ include_once("function/koneksi.php");
 if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
-if(isset($_GET['save'])){
-    ?>
-        <script> var save = true; </script>
-    <?php
-} 
 
 if(isset($_GET['hal'])) {
     if($_GET['hal'] == 'reject') {
@@ -68,6 +63,20 @@ if(isset($_GET['notif'])) {
     <!-- SWALL -->
     <script src="alert/sweetalert2.all.min.js"></script>
 </head>
+<?php
+if(isset($_GET['save'])){
+    ?>
+        <script> var save = true; 
+        console.log(save);
+        </script>
+    <?php
+} 
+if(isset($_POST['b_pass'])) {
+
+    change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
+
+}
+?>
 <body class="body">
 <div class="top_title container-fluid">
     <div class="row">
@@ -90,6 +99,21 @@ if(isset($_GET['notif'])) {
     
 </div>
 <div class="container mt-3">
+<?php
+if(isset($_GET['edit'])) {
+        ?>
+            <!-- Alert Edit -->
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Succes Edit !</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php
+        ?>
+        <?php
+}
+?>
     <div class="card">
         <div class="card-header bg-warning text-white">  
             <div class="row">
@@ -145,7 +169,6 @@ if(isset($_GET['notif'])) {
                     <?php
                         }
                     ?>
-                    <a href="" class="btn general_color text-white" type="submit" data-toggle="modal" data-target="#exampleModal1"><i class="fas fa-filter"></i> Filter</a>
                 </div>
                 <div class="col-sm-3">
                 <input class="form-control is-valid" type="search" placeholder="Search" aria-label="Search" id="myInput">
@@ -220,41 +243,6 @@ if(isset($_GET['notif'])) {
     </div>
 </div>
 
-
-
-    <!-- Modal Filter Data -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header general_color text-white">
-                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-filter"></i> Filter Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="">
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">Start Date</label>
-                            <div class="col-sm-9">
-                            <input type="date" class="form-control" name="tgl_1">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="" class="col-sm-3 col-form-label">End Date</label>
-                            <div class="col-sm-9">
-                            <input type="date" class="form-control" name="tgl_2">
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="b_filter" class="btn general_color text-white"> <i class="fas fa-filter"></i> Filter</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal GANTI PASSWORD -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -276,7 +264,7 @@ if(isset($_GET['notif'])) {
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">New Password</label>
                             <div class="col-sm-8">
-                            <input type="text" class="form-control" name="password" placeholder="Input New Password">
+                            <input type="text" class="form-control" name="new_password" placeholder="Input New Password">
                             </div>
                         </div>
                 </div>
@@ -290,6 +278,7 @@ if(isset($_GET['notif'])) {
 </body>
 <!-- // ALERT SAVE  -->
 <script>
+    console.log(save);
     if(save) {
         Swal.fire({
                 icon: 'success',
@@ -298,7 +287,7 @@ if(isset($_GET['notif'])) {
                 timer: 1700
             });
             setTimeout(function(){
-            window.location.href = 'request.php';
+            window.location.replace('request.php');
         }, 1700);
 
     }

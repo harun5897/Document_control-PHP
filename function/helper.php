@@ -1,4 +1,5 @@
 <?php
+
 function login ($koneksi, $email, $password) {
 
     $login = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE email = '$email' AND password = '$password'");
@@ -107,7 +108,7 @@ function edit_wi ($koneksi, $doc_code, $doc_name, $date, $revision, $file, $id) 
 
         move_uploaded_file($file["tmp_name"], "db_file/" . $file_up);
     }
-    header('location: request.php');
+    header('location: request.php?edit=true');
 }
 
 function obsolete ($koneksi, $id) {
@@ -222,4 +223,15 @@ function change_password ($koneksi, $id, $password, $new_password) {
     }
 
 }
+
+function filter_data ($koneksi, $dt1, $dt2) {
+
+        $_SESSION['dt1'] = $dt1;
+        $_SESSION['dt2'] = $dt2;
+
+            header('location: wi.php?filter=true');
+        
+}
+
 ?>
+

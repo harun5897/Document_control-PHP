@@ -90,7 +90,7 @@ if(isset($_GET['logout'])) {
                 timer: 1700
             });
             setTimeout(function(){
-            window.location.href = 'index.php';
+            window.location.replace('index.php');
         }, 1700);
 
     }

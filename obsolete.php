@@ -44,6 +44,12 @@ if(isset($_GET['notif'])) {
         notif_obsolete($koneksi, $_GET['id']);
     }
 }
+
+if(isset($_POST['b_pass'])) {
+
+    change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
+
+}
 ?>
 <body class="body">
 <div class="top_title container-fluid">
@@ -229,7 +235,7 @@ if(isset($_GET['notif'])) {
                         <div class="form-group row">
                             <label for="" class="col-sm-4 col-form-label">New Password</label>
                             <div class="col-sm-8">
-                            <input type="text" class="form-control" name="password" placeholder="Input New Password">
+                            <input type="text" class="form-control" name="new_password" placeholder="Input New Password">
                             </div>
                         </div>
                 </div>

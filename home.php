@@ -143,7 +143,9 @@ if(isset($_GET['pass'])) {
                             $obj_wi = mysqli_query($koneksi, "SELECT * from tb_wi");
                             while($data_wi = mysqli_fetch_array($obj_wi)) :
                                 if($data_wi['notif'] == 1 || $data_wi['notif'] == 2){
-                                    $a++;
+                                    if($data_wi['status'] == 'Y') {
+                                        $a++;
+                                    }
                                 }
                             endwhile;
                             $obj = mysqli_query($koneksi, "SELECT * from tb_obsolete");
@@ -357,10 +359,11 @@ if(isset($_GET['pass'])) {
                 timer: 1700
             });
             setTimeout(function(){
-            window.location.href = 'home.php';
+            window.location.replace('home.php');
         }, 1700);
 
     }
+
 </script>
 
 </html>
