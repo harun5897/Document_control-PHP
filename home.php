@@ -7,7 +7,23 @@ include_once("function/koneksi.php");
 if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
+$t_wi = 0;
+$t_ob = 0;
+$t_req = 0; 
+$obj_menu = mysqli_query($koneksi, "SELECT * from tb_wi"); 
+while($data_menu = mysqli_fetch_array($obj_menu)) :
+    if($data_menu['status'] == 'Y') {
+        $t_wi++;
+    }
+    if($data_menu['status'] == 'N') {
+        $t_req++;
+    }
+endwhile; 
 
+$obj_menu_ob = mysqli_query($koneksi, "SELECT * from tb_obsolete"); 
+while($data_menu_ob = mysqli_fetch_array($obj_menu_ob)) :
+        $t_ob++;
+endwhile; 
 
 if(isset($_GET['login'])){
     ?>
@@ -42,6 +58,8 @@ if(isset($_GET['login'])){
 </head>
 
 <?php
+
+
 if(isset($_POST['b_pass'])) {
 
     change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
@@ -253,7 +271,7 @@ if(isset($_GET['pass'])) {
                                 if($_SESSION['position'] == 'admin') 
                                 {
                             ?>
-                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
                             <?php
                                 }
                             ?>
@@ -274,7 +292,7 @@ if(isset($_GET['pass'])) {
                                 <h1> <i class="fas fa-file"></i></h1>
                             </div>
                             <div class="col-sm text-right">
-                                <h4>100</h4>
+                                <h4><?php echo $t_wi; ?></h4>
                                 <p>Total WI</p>
                             </div>
                         </div>
@@ -285,7 +303,7 @@ if(isset($_GET['pass'])) {
                                 <h1> <i class="fas fa-tasks"></i></h1>
                             </div>
                             <div class="col-sm text-right">
-                                <h4>100</h4>
+                                <h4><?php echo $t_req; ?></h4>
                                 <p>Request WI</p>
                             </div>
                         </div>
@@ -296,7 +314,7 @@ if(isset($_GET['pass'])) {
                                 <h1> <i class="far fa-sticky-note"></i></h1>
                             </div>
                             <div class="col-sm text-right">
-                                <h4>100</h4>
+                                <h4><?php echo $t_ob; ?></h4>
                                 <p>Absolote WI</p>
                             </div>
                         </div>

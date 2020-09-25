@@ -146,7 +146,7 @@ if(isset($_GET['edit'])) {
                                 if($_SESSION['position'] == 'admin') 
                                 {
                             ?>
-                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
                             <?php
                                 }
                             ?>

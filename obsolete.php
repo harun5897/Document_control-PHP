@@ -101,7 +101,7 @@ if(isset($_POST['b_pass'])) {
                         <b><a href="" style="color:black"><i class="fas fa-cog "></i> Setings</a></b>
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
-                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
                             <a href="#"><i class="fas fa-info-circle"></i> About us</a>
                         </div>
                     </div>
