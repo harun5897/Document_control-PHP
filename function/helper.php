@@ -233,5 +233,14 @@ function filter_data ($koneksi, $dt1, $dt2) {
         
 }
 
+function filter_data_ob ($koneksi, $dt1, $dt2) {
+
+    $_SESSION['dt1'] = $dt1;
+    $_SESSION['dt2'] = $dt2;
+
+        header('location: obsolete.php?filter=true');
+    
+}
+
 ?>
 

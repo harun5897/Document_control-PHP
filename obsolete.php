@@ -50,6 +50,10 @@ if(isset($_POST['b_pass'])) {
     change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
 
 }
+
+if(isset($_POST['b_filter'])) {
+    filter_data_ob($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
+}
 ?>
 <body class="body">
 <div class="top_title container-fluid">
@@ -134,7 +138,13 @@ if(isset($_POST['b_pass'])) {
                 </thead>
                 <tbody>
                     <?php
+                    if(isset($_GET['filter'])) {
+                        $dt1 = $_SESSION['dt1'];
+                        $dt2 = $_SESSION['dt2'];
+                        $tampil = mysqli_query($koneksi, "SELECT * FROM tb_wi WHERE date BETWEEN '$dt1' AND '$dt2'");
+                    } else {
                         $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
+                    }
                         while($data = mysqli_fetch_array($tampil)) :
                             $id = $data['id'];
                             $obj_obsolete = mysqli_query($koneksi, "SELECT * from tb_obsolete where id_wi = '$id'");
