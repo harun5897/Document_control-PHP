@@ -143,10 +143,10 @@ if(isset($_GET['edit'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'admin') 
+                                if($_SESSION['position'] == 'super') 
                                 {
                             ?>
-                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
+                            <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
                             <?php
                                 }
                             ?>
@@ -180,17 +180,27 @@ if(isset($_GET['edit'])) {
                         <th scope="col">No</th>
                         <th scope="col">Doc Code</th>
                         <th scope="col">Doc Name</th>
+                        <?php
+                        if($_SESSION['position'] == 'super') {
+                        ?>
+                        <th scope="col">Requester</th>
+
+                        <?php
+                        }
+                        ?>
                         <th scope="col">Date</th>
                         <th scope="col">Revisi</th>
                         <th scope="col">Status</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     <?php
                         $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
                         while($data = mysqli_fetch_array($tampil)) : 
+                            if ($_SESSION['position'] == 'staff') {
                             if ($data['status'] == 'N' || $data['status'] == 'R') {
+                                if ($_SESSION['id'] == $data['id_requester']) {
                     ?>
                     <tr>
                         <th scope="row"> <?=$data['id']?> </th>
@@ -233,7 +243,60 @@ if(isset($_GET['edit'])) {
                             ?>
                         </td>
                     </tr>
-                    <?php } endwhile; ?>
+                    <?php }}
+                        } 
+                        
+                        // Batas filter untuk request by staff
+                        if ($_SESSION['position'] == 'super') {
+                        if ($data['status'] == 'N' || $data['status'] == 'R') {
+                            $req = $data['id_requester'];
+                            $requester = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE id = '$req' ");
+                            $arr_requester = mysqli_fetch_array($requester);
+                ?>
+                <tr>
+                    <th scope="row"> <?=$data['id']?> </th>
+                    <td> <?=$data['doc_code']?> </td>
+                    <td> <?=$data['doc_name']?> </td>
+                    <td> <?=$arr_requester['name']?> </td>
+                    <td> <?=$data['date']?></td>
+                    <td> <?=$data['revision']?> </td>
+                    <td>   
+                            <?php
+                                if($data['status'] == 'N'){
+                                    echo '<span class="badge badge-pill badge-warning"> Request 
+                                    </span>';
+                                }
+                                if($data['status'] == 'R'){
+                                    echo '<span class="badge badge-pill badge-danger"> Not Accepted 
+                                    </span>';
+                                }
+                            ?>
+                    </td>
+                    <td class="text-center">
+                        <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+
+                        <?php
+                            if($_SESSION['position'] == 'staff'){
+                        ?>
+                        <a href="input_wi.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i></a>
+                        <a href="request.php?hal=req&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-arrow-alt-circle-right"></i></a>
+                        <?php
+                            }
+                        ?>
+                        <?php
+                            if($_SESSION['position'] == 'super' && $data['status'] !== "R"){
+                                
+                        ?>
+                        <a href="request.php?hal=accept&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                        <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+
+                        <?php
+                            }
+                        ?>
+                    </td>
+                </tr>
+                <?php }}
+                        endwhile; ?>
                                 <?php
                                 
                                 ?>
@@ -276,6 +339,20 @@ if(isset($_GET['edit'])) {
         </div>
     </div>
 </body>
+<!-- FITUR FILTER KEYUP -->
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>
+
 <!-- // ALERT SAVE  -->
 <script>
     console.log(save);
@@ -292,4 +369,5 @@ if(isset($_GET['edit'])) {
 
     }
 </script>
+
 </html>

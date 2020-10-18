@@ -24,12 +24,12 @@ function logut () {
     header('location: index.php');
 }
 
-function input_wi ($koneksi, $doc_code, $doc_name, $date, $revision, $file) {
+function input_wi ($koneksi, $doc_code, $doc_name, $date, $revision, $id_req ,$file) {
 
     $status = "N";
     $notif = "1";
-    mysqli_query($koneksi, "INSERT INTO tb_wi (doc_code, doc_name, date, revision, status, notif ) 
-        VALUES ('$doc_code', '$doc_name', '$date', '$revision', '$status', '$notif') "); 
+    mysqli_query($koneksi, "INSERT INTO tb_wi (doc_code, doc_name, date, revision, id_requester, status, notif ) 
+        VALUES ('$doc_code', '$doc_name', '$date', '$revision', '$id_req', '$status', '$notif') "); 
 
     $obj = mysqli_query($koneksi, "SELECT max(id) from tb_wi");
     $id = mysqli_fetch_array($obj);
@@ -242,5 +242,59 @@ function filter_data_ob ($koneksi, $dt1, $dt2) {
     
 }
 
+function report_data ($koneksi, $dt1, $dt2) {
+
+    $_SESSION['dt1'] = $dt1;
+    $_SESSION['dt2'] = $dt2;
+
+        header('location: report.php?report=true');
+    
+}
+
+function report_data_obs ($koneksi, $dt1, $dt2) {
+
+    $_SESSION['dt1'] = $dt1;
+    $_SESSION['dt2'] = $dt2;
+
+        header('location: report_obs.php?report=true');
+    
+}
+
+function user_save ($koneksi, $nik, $name, $email, $password) {
+
+    mysqli_query($koneksi, "INSERT INTO tb_user (nik, name, email, password, position) 
+    VALUES ('$nik', '$name', '$email', '$password', 'staff') "); 
+
+header('location: user_list.php');
+}
+
+function del_user ($koneksi, $id) {
+
+    mysqli_query($koneksi, "DELETE FROM tb_user WHERE id = '$id' " );
+    header('location: user_list.php');
+}
+function show_user ($koneksi, $id) {
+    if($_GET['hal'] == 'edit'){
+        $obj = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE id = '$id' ");
+        $arr = mysqli_fetch_array($obj);
+        if($arr)
+        {
+        $_SESSION['data_user'] = $arr;
+        }
+    }
+}
+
+function edit_user ($koneksi, $id, $nik, $name, $email, $password) {
+
+    mysqli_query($koneksi, "UPDATE tb_user SET 
+    nik = '$nik',
+    name = '$name',
+    email = '$email',
+    password = '$password'
+
+    WHERE id = '$id'
+    ");
+    header('location: user_list.php');
+}
 ?>
 

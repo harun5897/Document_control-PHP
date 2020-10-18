@@ -38,6 +38,7 @@ if(isset($_POST['btn_input_wi'])) {
                     $_POST['doc_name'],
                     $_POST['date'],
                     $_POST['revision'],
+                    $_SESSION['id'],
                     $file);
 }
 

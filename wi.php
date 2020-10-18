@@ -49,6 +49,10 @@ if(isset($_POST['b_pass'])) {
 if(isset($_POST['b_filter'])) {
     filter_data($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
 }
+
+if(isset($_POST['b_report'])) {
+    report_data($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
+}
 ?>
 <body class="body">
 <div class="top_title container-fluid">
@@ -101,10 +105,10 @@ if(isset($_POST['b_filter'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'admin') 
+                                if($_SESSION['position'] == 'super') 
                                 {
                             ?>
-                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
+                            <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
                             <?php
                                 }
                             ?>
@@ -145,7 +149,7 @@ if(isset($_POST['b_filter'])) {
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     <?php
                     if(isset($_GET['filter'])) {
                         $dt1 = $_SESSION['dt1'];
@@ -228,7 +232,7 @@ if(isset($_POST['b_filter'])) {
                         if($_SESSION['position'] == 'admin') 
                         {
                     ?>
-                    <button type="submit" name="b_cetak" class="btn general_color text-white"> <i class="fas fa-print"></i> Print</button>
+                    <button type="submit" name="b_report" class="btn general_color text-white"> <i class="fas fa-print"></i> Print</button>
                     <?php
                         }
                     ?>
@@ -271,4 +275,18 @@ if(isset($_POST['b_filter'])) {
         </div>
     </div>
 </body>
+<!-- FITUR FILTER KEYUP -->
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>
+
 </html>

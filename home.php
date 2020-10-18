@@ -142,7 +142,9 @@ if(isset($_GET['pass'])) {
                             while($data = mysqli_fetch_array($obj)) :
                                 if($data['status'] == 'Y' || $data['status'] == 'R'){
                                     if($data['notif'] == 1 || $data['notif'] == 3 ) {
+                                        if($data['id_requester'] == $_SESSION['id']) {
                                         $a++;
+                                        }
                                     }
                                 }
                             endwhile;
@@ -183,16 +185,20 @@ if(isset($_GET['pass'])) {
                             while($data = mysqli_fetch_array($obj)) :
                                 if($data['notif'] == 1 || $data['notif'] == 3) {
                                     if($data['status'] == 'R') {
+                                        if($data['id_requester'] == $_SESSION['id']) {
                             
                         ?>
                                         <a href="request.php?notif=reject&id=<?=$data['id']?>"><i class="fas fa-info-circle"></i> Rejected doc <?php echo $data['doc_code'] ?></a>
-                                <?php
+                                <?php   
+                                        }
                                     }
                                     else
                                     if($data['status'] == 'Y') {
+                                        if($data['id_requester'] == $_SESSION['id']) {
                                 ?>
                                         <a href="wi.php?notif=acc&id=<?=$data['id']?>"><i class="fas fa-info-circle"></i> Accepted doc <?php echo $data['doc_code'] ?></a>
                                 <?php
+                                        }
                                     }
                                 ?>
                         <?php
@@ -268,10 +274,10 @@ if(isset($_GET['pass'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'admin') 
+                                if($_SESSION['position'] == 'super') 
                                 {
                             ?>
-                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
+                            <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
                             <?php
                                 }
                             ?>

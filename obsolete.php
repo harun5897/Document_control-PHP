@@ -54,6 +54,10 @@ if(isset($_POST['b_pass'])) {
 if(isset($_POST['b_filter'])) {
     filter_data_ob($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
 }
+
+if(isset($_POST['b_report'])) {
+    report_data_obs($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
+}
 ?>
 <body class="body">
 <div class="top_title container-fluid">
@@ -136,7 +140,7 @@ if(isset($_POST['b_filter'])) {
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="myTable">
                     <?php
                     if(isset($_GET['filter'])) {
                         $dt1 = $_SESSION['dt1'];
@@ -217,7 +221,7 @@ if(isset($_POST['b_filter'])) {
                 </div>
                 <div class="modal-footer">
                     <button type="submit" name="b_filter" class="btn btn-info"> <i class="fas fa-filter"></i> Filter</button>
-                    <button type="submit" name="b_cetak" class="btn btn-info"> <i class="fas fa-print"></i> Print</button>
+                    <button type="submit" name="b_report" class="btn btn-info"> <i class="fas fa-print"></i> Print</button>
                     </form>
                 </div>
             </div>
@@ -257,4 +261,17 @@ if(isset($_POST['b_filter'])) {
         </div>
     </div>
 </body>
+<!-- FITUR FILTER KEYUP -->
+<script type="text/javascript" src="jquery/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+</script>
 </html>

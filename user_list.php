@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="admin"){
+if($_SESSION['position']!=="super"){
     header("location:index.php?pesan=gagal");
 }
 ?>
@@ -29,6 +29,20 @@ if($_SESSION['position']!=="admin"){
     <!-- SWALL -->
     <script src="alert/sweetalert2.all.min.js"></script>
 </head>
+
+<?php
+if(isset($_GET['hal'])) {
+    if($_GET['hal'] == 'del_user') {
+
+        del_user($koneksi, $_GET['id']);
+    }
+
+}
+if(isset($_POST['b_save_user'])) {
+
+    user_save($koneksi, $_POST['nik'], $_POST['name'], $_POST['email'], $_POST['password'],);
+}
+?>
 <body class="body">
 <div class="top_title container-fluid">
     <div class="row">
@@ -79,7 +93,7 @@ if($_SESSION['position']!=="admin"){
                         <b><a href="" style="color:black"><i class="fas fa-cog "></i> Setings</a></b>
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
-                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
+                            <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
                             <a href="#"><i class="fas fa-info-circle"></i> About us</a>
                         </div>
                     </div>
@@ -87,7 +101,7 @@ if($_SESSION['position']!=="admin"){
             </div>       
         </div>
         <div class="card-body">
-            <h5 class="card-title font"> <b>User List</b></h5>
+            <h5 class="card-title font"> <b>Staff List</b></h5>
             <hr>
             <div class="row">
                 <div class="col-sm">
@@ -107,27 +121,30 @@ if($_SESSION['position']!=="admin"){
                         <th scope="col"></th>
                     </tr>
                 </thead>
+                <?php
+                    $obj = mysqli_query($koneksi, "SELECT * from tb_user");
+                    while($data = mysqli_fetch_array($obj)) :
+                        if($data['position'] == 'staff') {
+                ?>
                 <tbody>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>012</td>
-                        <td>Joko Susilo</td>
-                        <td>joko@gmail.com</td>
+                        <th scope="row"><?=$data['id']?></th>
+                        <td><?=$data['nik']?></td>
+                        <td><?=$data['name']?></td>
+                        <td><?=$data['email']?></td>
                         <td class="text-center">
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            <a href="edit_user.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                            <a href="user_list.php?hal=del_user&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>013</td>
-                        <td>Harun</td>
-                        <td>harun@gmail.com</td>
-                        <td class="text-center">
-                            <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <a href="" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
-                        </td>
-                    </tr>
+                    <?php  
+                        }  
+                        endwhile; 
+
+                    ?>
+                        <?php
+                        
+                        ?>
                 </tbody>
             </table>
         </div>
@@ -151,30 +168,30 @@ if($_SESSION['position']!=="admin"){
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Nik</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="tgl_1">
+                            <input type="text" class="form-control" name="nik">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Name</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="tgl_2">
+                            <input type="text" class="form-control" name="name">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-10">
-                            <input type="text" class="form-control" name="tgl_2">
+                            <input type="text" class="form-control" name="email">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-10">
-                            <input type="password" class="form-control" name="tgl_2">
+                            <input type="password" class="form-control" name="password">
                             </div>
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" name="b_cetak" class="btn general_color text-white"> <i class="fas fa-save"></i> Save</button>
+                    <button type="submit" name="b_save_user" class="btn general_color text-white"> <i class="fas fa-save"></i> Save</button>
                     </form>
                 </div>
             </div>
