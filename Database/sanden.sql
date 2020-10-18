@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2020 at 10:42 AM
+-- Generation Time: Oct 18, 2020 at 12:25 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -36,13 +36,6 @@ CREATE TABLE `tb_obsolete` (
   `notif` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `tb_obsolete`
---
-
-INSERT INTO `tb_obsolete` (`id`, `id_wi`, `start_date`, `end_date`, `notif`) VALUES
-(27, 24, '2020-09-25', '2020-10-25', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -63,9 +56,10 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`id`, `nik`, `name`, `email`, `password`, `position`) VALUES
-(1, 212, 'Harun', 'harun@gmail.com', '12345', 'staff'),
 (2, 213, 'joko', 'joko@gmail.com', '12345', 'super'),
-(10, 214, 'ade', 'ade@gmail.com', '12345', 'admin');
+(10, 214, 'ade', 'ade@gmail.com', '12345', 'admin'),
+(12, 215, 'budi', 'budi@gmail.com', '12345', 'staff'),
+(15, 321, 'tirto', 'tirto@gmail.com', '12345', 'staff');
 
 -- --------------------------------------------------------
 
@@ -80,18 +74,9 @@ CREATE TABLE `tb_wi` (
   `date` date NOT NULL,
   `revision` varchar(255) NOT NULL,
   `status` varchar(5) NOT NULL,
-  `notif` int(11) NOT NULL
+  `notif` int(11) NOT NULL,
+  `id_requester` int(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tb_wi`
---
-
-INSERT INTO `tb_wi` (`id`, `doc_code`, `doc_name`, `date`, `revision`, `status`, `notif`) VALUES
-(24, '1', 'WI_1', '2020-09-23', '1', 'Y', 2),
-(25, '2', 'WI_2', '2020-09-23', '12', 'Y', 2),
-(26, '3', 'Wi_3', '2020-09-22', '1', 'Y', 2),
-(27, '1', 'WI_4', '2020-09-25', '1', 'N', 1);
 
 --
 -- Indexes for dumped tables
@@ -129,13 +114,13 @@ ALTER TABLE `tb_obsolete`
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tb_wi`
 --
 ALTER TABLE `tb_wi`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
