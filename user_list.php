@@ -42,6 +42,7 @@ if(isset($_POST['b_save_user'])) {
 
     user_save($koneksi, $_POST['nik'], $_POST['name'], $_POST['email'], $_POST['password']);
 }
+
 ?>
 <body class="body">
 <div class="top_title container-fluid">

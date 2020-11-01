@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2020 at 12:25 PM
+-- Generation Time: Nov 01, 2020 at 02:29 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -35,6 +35,13 @@ CREATE TABLE `tb_obsolete` (
   `end_date` date NOT NULL,
   `notif` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tb_obsolete`
+--
+
+INSERT INTO `tb_obsolete` (`id`, `id_wi`, `start_date`, `end_date`, `notif`) VALUES
+(31, 38, '2020-11-01', '2020-12-01', 1);
 
 -- --------------------------------------------------------
 
@@ -75,7 +82,8 @@ CREATE TABLE `tb_wi` (
   `revision` varchar(255) NOT NULL,
   `status` varchar(5) NOT NULL,
   `notif` int(11) NOT NULL,
-  `id_requester` int(9) NOT NULL
+  `id_requester` int(9) NOT NULL,
+  `comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -108,7 +116,7 @@ ALTER TABLE `tb_wi`
 -- AUTO_INCREMENT for table `tb_obsolete`
 --
 ALTER TABLE `tb_obsolete`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
@@ -120,7 +128,7 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_wi`
 --
 ALTER TABLE `tb_wi`
-  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

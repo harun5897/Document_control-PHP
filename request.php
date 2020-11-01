@@ -10,7 +10,14 @@ if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSI
 if(isset($_GET['hal'])) {
     if($_GET['hal'] == 'reject') {
 
-        reject($koneksi, $_GET['id']);
+        // reject($koneksi, $_GET['id']);
+        $_SESSION['val'] = $_GET['id'];
+    ?>
+        <script>
+            var modal = 1;
+        </script>
+    <?php
+        
     }
 
     if($_GET['hal'] == 'accept') {
@@ -40,7 +47,6 @@ if(isset($_GET['notif'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +60,7 @@ if(isset($_GET['notif'])) {
     <link rel="stylesheet" type="text/css" href="style/custom.css">
     
     <script type="text/javascript" src="jquery/jquery-3.2.1.slim.min.js"></script>
-    <script type="text/javascript" src="pooper/pooper.min.js"></script>
+    <!-- <script type="text/javascript" src="pooper/pooper.min.js"></script> -->
 
     <script type="text/javascript" src="js/bootstrap.min.js"> </script>
     <script type="text/javascript" src="js/bootstrap.js"> </script>
@@ -75,6 +81,10 @@ if(isset($_POST['b_pass'])) {
 
     change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
 
+}
+
+if(isset($_POST['b_reject'])) {
+    reject($koneksi, $_POST['comment'], $_SESSION['val']);
 }
 ?>
 <body class="body">
@@ -191,6 +201,7 @@ if(isset($_GET['edit'])) {
                         <th scope="col">Date</th>
                         <th scope="col">Revisi</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Remark</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -220,6 +231,7 @@ if(isset($_GET['edit'])) {
                                     }
                                 ?>
                         </td>
+                        <td style="width: 250px"><?=$data['comment']?></td>
                         <td class="text-center">
                             <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
 
@@ -236,7 +248,7 @@ if(isset($_GET['edit'])) {
                                     
                             ?>
                             <a href="request.php?hal=accept&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
-                            <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+                            <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm" ><i class="fas fa-times"></i></a>
 
                             <?php
                                 }
@@ -272,6 +284,7 @@ if(isset($_GET['edit'])) {
                                 }
                             ?>
                     </td>
+                    <td style="width: 250px"><?=$data['comment']?></td>
                     <td class="text-center">
                         <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
 
@@ -289,7 +302,10 @@ if(isset($_GET['edit'])) {
                         ?>
                         <a href="request.php?hal=accept&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
                         <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-times"></i></a>
+                        
 
+                            </div>
+                        </form>
                         <?php
                             }
                         ?>
@@ -338,11 +354,33 @@ if(isset($_GET['edit'])) {
             </div>
         </div>
     </div>
+
+    <!-- Modal ATASAN BERI KOMENTAR -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-times"></i> Remark</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="">
+                    <textarea class="form-control" name="comment"></textarea>
+                        
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" name="b_reject" class="btn general_color text-white"> <i class=""></i> <b>OK</b></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-<!-- FITUR FILTER KEYUP -->
-<script type="text/javascript" src="jquery/jquery.min.js"></script>
 
 <script>
+
 $(document).ready(function(){
     $("#myInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -353,9 +391,8 @@ $(document).ready(function(){
 });
 </script>
 
-<!-- // ALERT SAVE  -->
 <script>
-    console.log(save);
+console.log(save);
     if(save) {
         Swal.fire({
                 icon: 'success',
@@ -366,8 +403,15 @@ $(document).ready(function(){
             setTimeout(function(){
             window.location.replace('request.php');
         }, 1700);
-
     }
+</script>
+
+<script>
+if (modal) {
+    $(document).ready(function(){
+        $('#exampleModal3').modal();
+    });
+}
 </script>
 
 </html>

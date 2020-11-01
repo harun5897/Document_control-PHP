@@ -50,11 +50,15 @@ function delete ($koneksi, $id) {
     mysqli_query($koneksi, "DELETE FROM tb_wi WHERE id = '$id' " );
 }
 
-function reject ($koneksi, $id) {
+function reject ($koneksi, $comment, $id) {
     $status = 'R';
     mysqli_query($koneksi, "UPDATE tb_wi SET status = '$status' WHERE id = $id ");
     mysqli_query($koneksi, "UPDATE tb_wi SET notif = '1' WHERE id = $id ");
+    mysqli_query($koneksi, "UPDATE tb_wi SET comment = '$comment' WHERE id = $id ");
+    $_SESSION['val'] = '';
     header('location: request.php');
+
+
 
 }
 

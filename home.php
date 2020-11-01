@@ -370,7 +370,6 @@ if(isset($_GET['pass'])) {
             </div>
         </div>
     </div>
-</body>
 
 <!-- // ALERT LOGIN  -->
 <script>
@@ -387,6 +386,10 @@ if(isset($_GET['pass'])) {
         }, 1700);
 
     }
+
+    $(document).ready(function() {
+                $('#exampleModal3').modal('show');
+            })
 
 </script>
 
