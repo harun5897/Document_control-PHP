@@ -125,6 +125,7 @@ function obsolete ($koneksi, $id) {
     mysqli_query($koneksi, "INSERT INTO tb_obsolete (id_wi, start_date, end_date ) 
     VALUES ('$id', '$start_date', '$end_date') ");
     mysqli_query($koneksi, "UPDATE tb_obsolete SET notif = '1' WHERE id_wi = $id ");
+    header('location: obsolete.php');
     
 }
 

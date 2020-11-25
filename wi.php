@@ -41,6 +41,17 @@ if(isset($_GET['notif'])) {
     }
 }
 
+if(isset($_GET['hal'])) {
+    if($_GET['hal'] == 'obsolete'){
+        $_SESSION['obsolete'] = $_GET['id'];
+        ?>
+            <script>
+                var obsolete = 1;
+            </script>
+        <?php
+    }
+}
+
 if(isset($_POST['b_pass'])) {
 
     change_password($koneksi, $_SESSION['id'], $_POST['password'], $_POST['new_password']);
@@ -52,6 +63,10 @@ if(isset($_POST['b_filter'])) {
 
 if(isset($_POST['b_report'])) {
     report_data($koneksi, $_POST["tgl_1"], $_POST["tgl_2"]);
+}
+
+if(isset($_POST['b_obsolete'])) {
+    obsolete($koneksi, $_SESSION['obsolete']);
 }
 ?>
 <body class="body">
@@ -178,7 +193,7 @@ if(isset($_POST['b_report'])) {
                                 if($_SESSION['position'] == 'admin')
                                 {
                             ?>
-                                <a href="obsolete.php?hal=obsolete&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-file-import"></i></a>
+                                <a href="wi.php?hal=obsolete&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-file-import"></i></a>
                             <?php
                                 }
                             ?>
@@ -274,9 +289,31 @@ if(isset($_POST['b_report'])) {
             </div>
         </div>
     </div>
+
+    <!-- Modal KONFIRMASI OBSOLETE -->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-times"></i> Alert </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form method="post" action="">
+                    <h3>Are You Sure ?</h3>
+                    <p>Continue this process !</p>
+                    <button type="submit" name="b_obsolete" class="btn general_color text-white"> <i class=""></i> <b>OK</b></button>
+                    <a href="request.php" class="btn btn-danger text-white" > <b> Cancel</b> </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <!-- FITUR FILTER KEYUP -->
-<script type="text/javascript" src="jquery/jquery.min.js"></script>
+
 
 <script>
 $(document).ready(function(){
@@ -287,6 +324,14 @@ $(document).ready(function(){
         });
     });
 });
+</script>
+
+<script>
+if (obsolete) {
+    $(document).ready(function(){
+        $('#exampleModal3').modal();
+    });
+}
 </script>
 
 </html>

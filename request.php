@@ -22,12 +22,25 @@ if(isset($_GET['hal'])) {
 
     if($_GET['hal'] == 'accept') {
 
-        accept($koneksi, $_GET['id']);
+        // accept($koneksi, $_GET['id']);
+        $_SESSION['accept'] = $_GET['id'];
+        ?>
+        <script>
+            var accept = 1;
+        </script>
+    <?php
     }
 
     if($_GET['hal'] == 'req') {
 
-        req($koneksi, $_GET['id']);
+        // req($koneksi, $_GET['id']);
+        $_SESSION['req'] = $_GET['id'];
+        ?>
+        <script>
+            var req = 1;
+        </script>
+    <?php
+        
     }
 }
 
@@ -85,6 +98,16 @@ if(isset($_POST['b_pass'])) {
 
 if(isset($_POST['b_reject'])) {
     reject($koneksi, $_POST['comment'], $_SESSION['val']);
+}
+
+if(isset($_POST['b_req'])) {
+    // reject($koneksi, $_POST['comment'], $_SESSION['val']);
+    req($koneksi,  $_SESSION['req']);
+}
+
+if(isset($_POST['b_accept'])) {
+    // reject($koneksi, $_POST['comment'], $_SESSION['val']);
+    accept($koneksi,  $_SESSION['accept']);
 }
 ?>
 <body class="body">
@@ -377,6 +400,50 @@ if(isset($_GET['edit'])) {
             </div>
         </div>
     </div>
+
+    <!-- Modal KONFIRMASI REQUEST -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-times"></i> Alert </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form method="post" action="">
+                    <h3>Are You Sure ?</h3>
+                    <p>Continue this process !</p>
+                    <button type="submit" name="b_req" class="btn general_color text-white"> <i class=""></i> <b>OK</b></button>
+                    <a href="request.php" class="btn btn-danger text-white" > <b> Cancel</b> </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal KONFIRMASI ACCEPT -->
+    <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header general_color text-white">
+                    <h5 class="modal-title" id="exampleModalLabel"> <i class="fas fa-times"></i> Alert </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form method="post" action="">
+                    <h3>Are You Sure ?</h3>
+                    <p>Accepted this document !</p>
+                    <button type="submit" name="b_accept" class="btn general_color text-white"> <i class=""></i> <b>OK</b></button>
+                    <a href="request.php" class="btn btn-danger text-white" > <b> Cancel</b> </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -410,6 +477,22 @@ console.log(save);
 if (modal) {
     $(document).ready(function(){
         $('#exampleModal3').modal();
+    });
+}
+</script>
+
+<script>
+if (req) {
+    $(document).ready(function(){
+        $('#exampleModal4').modal();
+    });
+}
+</script>
+
+<script>
+if (accept) {
+    $(document).ready(function(){
+        $('#exampleModal5').modal();
     });
 }
 </script>
