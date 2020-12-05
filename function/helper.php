@@ -252,7 +252,7 @@ function report_data ($koneksi, $dt1, $dt2) {
     $_SESSION['dt1'] = $dt1;
     $_SESSION['dt2'] = $dt2;
 
-        header('location: report.php?report=true');
+        header('location: report1.php?report=true');
     
 }
 
@@ -261,7 +261,7 @@ function report_data_obs ($koneksi, $dt1, $dt2) {
     $_SESSION['dt1'] = $dt1;
     $_SESSION['dt2'] = $dt2;
 
-        header('location: report_obs.php?report=true');
+        header('location: report_obs1.php?report=true');
     
 }
 
