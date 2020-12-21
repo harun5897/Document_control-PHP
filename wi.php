@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
+if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super" && $_SESSION['position'] !== "super_admin"){
     header("location:index.php?pesan=gagal");
 }
 
@@ -98,7 +98,7 @@ if(isset($_POST['b_obsolete'])) {
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
                     <?php
-                        if($_SESSION['position'] == 'admin') 
+                        if($_SESSION['position'] == 'admin' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
@@ -106,7 +106,7 @@ if(isset($_POST['b_obsolete'])) {
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff") 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff" || $_SESSION['position'] == "super_admin") 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -120,7 +120,7 @@ if(isset($_POST['b_obsolete'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'super') 
+                                if($_SESSION['position'] == 'super' || $_SESSION['position'] == 'super_admin') 
                                 {
                             ?>
                             <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
@@ -139,7 +139,7 @@ if(isset($_POST['b_obsolete'])) {
             <div class="row">
                 <div class="col-sm">
                     <?php
-                        if($_SESSION['position'] == 'staff') 
+                        if($_SESSION['position'] == 'staff' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <a href="input_wi.php" class="btn general_color text-white"><i class="fas fa-plus"></i> New</a>
@@ -190,7 +190,7 @@ if(isset($_POST['b_obsolete'])) {
                         <td class="text-center">
                             <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                             <?php
-                                if($_SESSION['position'] == 'admin')
+                                if($_SESSION['position'] == 'admin' || $_SESSION['position'] == 'super_admin')
                                 {
                             ?>
                                 <a href="wi.php?hal=obsolete&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-file-import"></i></a>

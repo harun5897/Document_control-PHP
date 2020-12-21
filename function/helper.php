@@ -265,10 +265,10 @@ function report_data_obs ($koneksi, $dt1, $dt2) {
     
 }
 
-function user_save ($koneksi, $nik, $name, $email, $password) {
+function user_save ($koneksi, $nik, $name, $email, $position ,$password) {
 
     mysqli_query($koneksi, "INSERT INTO tb_user (nik, name, email, password, position) 
-    VALUES ('$nik', '$name', '$email', '$password', 'staff') "); 
+    VALUES ('$nik', '$name', '$email', '$password', '$position') "); 
 
 header('location: user_list.php');
 }
@@ -289,12 +289,13 @@ function show_user ($koneksi, $id) {
     }
 }
 
-function edit_user ($koneksi, $id, $nik, $name, $email, $password) {
+function edit_user ($koneksi, $id, $nik, $name, $email, $position, $password) {
 
     mysqli_query($koneksi, "UPDATE tb_user SET 
     nik = '$nik',
     name = '$name',
     email = '$email',
+    position = '$position',
     password = '$password'
 
     WHERE id = '$id'

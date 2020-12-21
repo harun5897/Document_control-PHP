@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super"){
+if($_SESSION['position']!=="admin" && $_SESSION['position']!=="staff" && $_SESSION['position']!=="super" && $_SESSION['position'] !== 'super_admin'){
     header("location:index.php?pesan=gagal");
 }
 
@@ -154,7 +154,7 @@ if(isset($_GET['edit'])) {
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
                     <?php
-                        if($_SESSION['position'] == 'admin') 
+                        if($_SESSION['position'] == 'admin' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
@@ -162,7 +162,7 @@ if(isset($_GET['edit'])) {
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super' || $_SESSION['position']=="staff") 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position']=="staff" || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -176,7 +176,7 @@ if(isset($_GET['edit'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'super') 
+                                if($_SESSION['position'] == 'super' || $_SESSION['position'] == 'super_admin') 
                                 {
                             ?>
                             <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
@@ -195,7 +195,7 @@ if(isset($_GET['edit'])) {
             <div class="row">
                 <div class="col-sm">
                     <?php
-                        if($_SESSION['position'] == 'staff') 
+                        if($_SESSION['position'] == 'staff' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <a href="input_wi.php" class="btn general_color text-white"><i class="fas fa-plus"></i> New</a>
@@ -229,6 +229,7 @@ if(isset($_GET['edit'])) {
                     </tr>
                 </thead>
                 <tbody id="myTable">
+                <!-- UNTUK STAFF -->
                     <?php
                         $tampil = mysqli_query($koneksi, "SELECT * from tb_wi");
                         while($data = mysqli_fetch_array($tampil)) : 
@@ -280,8 +281,65 @@ if(isset($_GET['edit'])) {
                     </tr>
                     <?php }}
                         } 
-                        
-                        // Batas filter untuk request by staff
+                    ?>
+
+
+                    <!-- UNTUK SUPER ADMIN-->
+                    <?php 
+                            if ($_SESSION['position'] == 'super_admin') {
+                            if ($data['status'] == 'N' || $data['status'] == 'R') {
+                                $req = $data['id_requester'];
+                                $requester = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE id = '$req' ");
+                                $arr_requester = mysqli_fetch_array($requester);
+                    ?>
+                    <tr>
+                        <th scope="row"> <?=$data['id']?> </th>
+                        <td> <?=$data['doc_code']?> </td>
+                        <td> <?=$data['doc_name']?> </td>
+                        <td> <?=$data['date']?></td>
+                        <td> <?=$data['revision']?> </td>
+                        <td>   
+                                <?php
+                                    if($data['status'] == 'N'){
+                                        echo '<span class="badge badge-pill badge-warning"> Request 
+                                        </span>';
+                                    }
+                                    if($data['status'] == 'R'){
+                                        echo '<span class="badge badge-pill badge-danger"> Not Accepted 
+                                        </span>';
+                                    }
+                                ?>
+                        </td>
+                        <td style="width: 250px"><?=$data['comment']?></td>
+                        <td class="text-center">
+                            <a href="show.php?hal=show&id=<?=$data['id']?>" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+
+                            <?php
+                                if($_SESSION['position'] == 'super_admin' && $data['status'] !== 'N') {
+                            ?>
+                            <a href="input_wi.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"> <i class="fas fa-edit"></i></a>
+                            <a href="request.php?hal=req&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-arrow-alt-circle-right"></i></a>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                if($_SESSION['position'] == 'super_admin' && $data['status'] !== "R"){
+                                    
+                            ?>
+                            <a href="request.php?hal=accept&id=<?=$data['id']?>" class="btn btn-success btn-sm"><i class="fas fa-check"></i></a>
+                            <a href="request.php?hal=reject&id=<?=$data['id']?>" class="btn btn-danger btn-sm" ><i class="fas fa-times"></i></a>
+
+                            <?php
+                                }
+                            ?>
+                        </td>
+                    </tr>
+                    <?php }
+                        } 
+                    ?>
+
+                        <!-- UNTUK ATASAN -->
+                    <?php
                         if ($_SESSION['position'] == 'super') {
                         if ($data['status'] == 'N' || $data['status'] == 'R') {
                             $req = $data['id_requester'];
@@ -334,7 +392,8 @@ if(isset($_GET['edit'])) {
                         ?>
                     </td>
                 </tr>
-                <?php }}
+                <?php }} 
+                
                         endwhile; ?>
                                 <?php
                                 

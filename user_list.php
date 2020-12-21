@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="super"){
+if($_SESSION['position']!=="super" && $_SESSION['position'] !== 'super_admin'){
     header("location:index.php?pesan=gagal");
 }
 ?>
@@ -40,7 +40,13 @@ if(isset($_GET['hal'])) {
 }
 if(isset($_POST['b_save_user'])) {
 
-    user_save($koneksi, $_POST['nik'], $_POST['name'], $_POST['email'], $_POST['password']);
+    if($_SESSION['position'] == 'super_admin') {
+        $position = $_POST['position'];
+    } else {
+        $position = 'staff';
+    }
+
+    user_save($koneksi, $_POST['nik'], $_POST['name'], $_POST['email'], $position, $_POST['password']);
 }
 
 ?>
@@ -73,7 +79,7 @@ if(isset($_POST['b_save_user'])) {
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
                     <?php
-                        if($_SESSION['position'] == 'admin') 
+                        if($_SESSION['position'] == 'admin' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
@@ -81,7 +87,7 @@ if(isset($_POST['b_save_user'])) {
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super') 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -94,7 +100,13 @@ if(isset($_POST['b_save_user'])) {
                         <b><a href="" style="color:black"><i class="fas fa-cog "></i> Setings</a></b>
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
+                            <?php
+                                if($_SESSION['position'] == 'super' || $_SESSION['position'] == 'super_admin') {
+                            ?>
                             <a href="user_list.php"><i class="far fa-id-card"></i> Staff List</a>
+                            <?php
+                                }
+                            ?>
                             <a href="#"><i class="fas fa-info-circle"></i> About us</a>
                         </div>
                     </div>
@@ -119,13 +131,21 @@ if(isset($_POST['b_save_user'])) {
                         <th scope="col">Nik</th>
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
+                        <?php
+                            if($_SESSION['position'] == 'super_admin') {
+                        ?>
+                        <th scope="col">Position</th>
+                        <?php
+                            }
+                        ?>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <?php
                     $obj = mysqli_query($koneksi, "SELECT * from tb_user");
                     while($data = mysqli_fetch_array($obj)) :
-                        if($data['position'] == 'staff') {
+                        if($_SESSION['position'] == 'super') {
+                            if($data['position'] == 'staff') {
                 ?>
                 <tbody>
                     <tr>
@@ -133,20 +153,63 @@ if(isset($_POST['b_save_user'])) {
                         <td><?=$data['nik']?></td>
                         <td><?=$data['name']?></td>
                         <td><?=$data['email']?></td>
+                        <?php
+                            if($_SESSION['position'] == "super_admin") {
+                        ?>
+                        <td><?=$data['position']?></td>
+                        <?php
+                            }
+                        ?>
                         <td class="text-center">
                             <a href="edit_user.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                             <a href="user_list.php?hal=del_user&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
+                </tbody>
                     <?php  
                         }  
+                    }
+                    if($_SESSION['position'] =='super_admin') 
+                    {
+                        ?>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><?=$data['id']?></th>
+                                <td><?=$data['nik']?></td>
+                                <td><?=$data['name']?></td>
+                                <td><?=$data['email']?></td>
+                                <?php
+                                    if($_SESSION['position'] == "super_admin") {
+                                ?>
+                                <td><?php   if($data['position'] == 'super') { echo 'Atasan';} else
+                                            if ($data['position'] == 'admin') {echo 'Manager';}
+                                            else
+                                                {echo $data['position'];}                                    
+                                    ?>
+                                </td>
+                                <?php
+                                    }
+                                ?>
+                                <td class="text-center">
+                                    <?php
+                                        if($data['nik'] !== '123456789') {
+                                    ?>
+                                        <a href="edit_user.php?hal=edit&id=<?=$data['id']?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                        <a href="user_list.php?hal=del_user&id=<?=$data['id']?>" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                    <?php
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    <?php
+                    }
                         endwhile; 
-
                     ?>
                         <?php
                         
                         ?>
-                </tbody>
             </table>
         </div>
     </div>
@@ -184,6 +247,20 @@ if(isset($_POST['b_save_user'])) {
                             <input type="text" class="form-control" name="email">
                             </div>
                         </div>
+                        <?php if($_SESSION['position'] == 'super_admin') { ?>
+                        <div class="form-group row">
+                            <label for="" class="col-sm-2 col-form-label">Position</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select" name="position">
+                                    <option selected>Choose...</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="super">Atasan</option>
+                                    <option value="admin">Manager</option>
+                                    <option value="super_admin">Super admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <?php } ?>
                         <div class="form-group row">
                             <label for="" class="col-sm-2 col-form-label">Password</label>
                             <div class="col-sm-10">

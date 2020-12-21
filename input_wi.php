@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="staff"){
+if($_SESSION['position']!=="staff" && $_SESSION['position'] !== 'super_admin'){
     header("location:home.php?pesan=gagal");
 }
 ?>
@@ -89,7 +89,7 @@ if(isset($_GET['hal'])) {
                     <b> <a href="home.php" class="mr-4" style="color: black;"> <i class="fas fa-home"></i>| Home </a></b>
                     <b> <a href="wi.php" class="mr-4" style="color: black"> <i class="far fa-clipboard"> </i>| Work Instruction </a></b>
                     <?php
-                        if($_SESSION['position'] == 'admin') 
+                        if($_SESSION['position'] == 'admin' || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="obsolete.php" class="mr-4" style="color: black"> <i class="fas fa-file-alt"> </i>| Obsolete WI </a></b>
@@ -97,7 +97,7 @@ if(isset($_GET['hal'])) {
                         }
                     ?>
                     <?php
-                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff") 
+                        if($_SESSION['position'] == 'super' || $_SESSION['position'] =="staff" || $_SESSION['position'] == 'super_admin') 
                         {
                     ?>
                         <b> <a href="request.php" class="mr-4" style="color: black"> <i class="fas fa-check-circle"> </i>| Request </a></b>
@@ -111,10 +111,10 @@ if(isset($_GET['hal'])) {
                         <div class="dropdown-content">
                             <a href="" type="button"  data-toggle="modal" data-target="#exampleModal2" ><i class="fas fa-key"></i> Change Password</a>
                             <?php
-                                if($_SESSION['position'] == 'admin') 
+                                if($_SESSION['position'] == 'super' || $_SESSION['position'] == 'super_admin') 
                                 {
                             ?>
-                            <!-- <a href="user_list.php"><i class="far fa-id-card"></i> User List</a> -->
+                            <a href="user_list.php"><i class="far fa-id-card"></i> User List</a>
                             <?php
                                 }
                             ?>

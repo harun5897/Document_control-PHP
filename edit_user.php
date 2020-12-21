@@ -3,7 +3,7 @@ session_start();
 include_once('function/helper.php');
 include_once("function/koneksi.php");
 
-if($_SESSION['position']!=="super"){
+if($_SESSION['position']!=="super" && $_SESSION['position'] !== 'super_admin'){
     header("location:home.php?pesan=gagal");
 }
 ?>
@@ -39,7 +39,12 @@ if(isset($_GET['hal'])) {
 }
 
 if(isset($_POST['btn_edit_user'])) {
-    edit_user($koneksi, $_GET['id'], $_POST['nik'], $_POST['name'], $_POST['email'], $_POST['password'],);
+    if($_SESSION['position'] == 'super_admin') {
+        $position = $_POST['position'];
+    } else {
+        $position = 'staff';
+    }
+    edit_user($koneksi, $_GET['id'], $_POST['nik'], $_POST['name'], $_POST['email'], $position, $_POST['password'],);
 }
 
 ?>
@@ -133,6 +138,17 @@ if(isset($_POST['btn_edit_user'])) {
                                     <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Email</b></label>
                                     <div class="col-sm-9">
                                     <input type="" class="form-control" id="colFormLabel" placeholder="" value="<?=$arr['email']?>" name="email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="colFormLabel" class="col-sm-3 col-form-label"><b>Position</b></label>
+                                    <div class="col-sm-9">
+                                        <select class="custom-select" name="position">
+                                            <option value="staff" <?php if($arr['position'] == 'staff') { ?> selected <?php } ?>>Staff</opti>
+                                            <option value="super" <?php if($arr['position'] == 'super') { ?> selected <?php } ?>>Atasan</option>
+                                            <option value="admin" <?php if($arr['position'] == 'admin') { ?> selected <?php } ?>>Manager</option>
+                                            <option value="super_admin" <?php if($arr['position'] == 'super_admin') { ?> selected <?php } ?>>Super admin</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
